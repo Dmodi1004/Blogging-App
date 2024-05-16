@@ -1,0 +1,14 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Blog" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <item name="android:statusBarColor">@color/skyBlue</item>
+    </style>
+
+    <style name="MySplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_blog_splash_night</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.Blog</item>
+    </style>
+
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.Blog" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="android:statusBarColor">@color/skyBlue</item>
+    </style>
+
+    <style name="Theme.Blog" parent="Base.Theme.Blog" />
+
+    <style name="MySplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_blog_splash</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.Blog</item>
+    </style>
+
+    <style name="roundFloatingBtn" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>

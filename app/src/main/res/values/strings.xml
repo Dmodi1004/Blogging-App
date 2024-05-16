@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Blog</string>
+    <string name="save">Save</string>
+    <string name="like">Like</string>
+    <string name="share">Share</string>
+    <string name="profile">Profile</string>
+</resources>

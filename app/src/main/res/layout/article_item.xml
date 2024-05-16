@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:backgroundTint="@color/white"
+    app:cardCornerRadius="9dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/headingTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_semi_bold"
+            android:maxLines="2"
+            android:text="Please Start Writing Better Git Commit"
+            android:textColor="@color/skyBlue"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/materialCardView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/materialCardView2"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="100dp"
+            app:layout_constraintBottom_toBottomOf="@+id/headingTv"
+            app:layout_constraintEnd_toStartOf="@+id/userNameTv"
+            app:layout_constraintTop_toTopOf="@+id/headingTv"
+            app:strokeWidth="0.5dp">
+
+            <ImageView
+                android:id="@+id/userProfileImage"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/profile"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user_avatar" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/userNameTv"
+            android:layout_width="70dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="9dp"
+            android:fontFamily="@font/montserrat_light"
+            android:gravity="center"
+            android:maxLines="2"
+            android:padding="5dp"
+            android:text="New Blogger"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/materialCardView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/materialCardView2" />
+
+        <TextView
+            android:id="@+id/dateTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_light"
+            android:text="May 11, 2024"
+            android:textColor="@color/lightGray"
+            app:layout_constraintEnd_toEndOf="@+id/userNameTv"
+            app:layout_constraintTop_toBottomOf="@+id/userNameTv" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="@+id/userNameTv"
+            app:layout_constraintStart_toStartOf="@+id/headingTv"
+            app:layout_constraintTop_toBottomOf="@+id/dateTv" />
+
+        <TextView
+            android:id="@+id/postTv"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="14dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_light"
+            android:letterSpacing="0.03"
+            android:lineHeight="22sp"
+            android:maxLines="4"
+            android:text="Everyone has the right to freedom of thought, conscience and religion; this right includes freedom to change his religion or belief, and freedom, either alone or in community with others and in public or private, to manifest his"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/divider"
+            app:layout_constraintStart_toStartOf="@+id/divider"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/readMoreBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:backgroundTint="@color/skyBlue"
+            android:text="Read More"
+            android:textColor="@color/white"
+            app:cornerRadius="9dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postTv" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/black"
+            android:text="Edit"
+            app:cornerRadius="9dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/readMoreBtn"
+            app:layout_constraintEnd_toStartOf="@+id/deleteBtn"
+            app:layout_constraintStart_toEndOf="@+id/readMoreBtn"
+            app:layout_constraintTop_toTopOf="@+id/readMoreBtn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/red"
+            android:text="Delete"
+            app:cornerRadius="9dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/editBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/editBtn"
+            app:layout_constraintTop_toTopOf="@+id/editBtn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
