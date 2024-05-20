@@ -1,4 +1,4 @@
-package com.example.blog.views.register
+package com.example.blog.views.activities.register
 
 import android.content.Intent
 import android.net.Uri
@@ -8,9 +8,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.blog.R
 import com.example.blog.databinding.ActivitySignInAndRegistrationBinding
 import com.example.blog.models.UserData
-import com.example.blog.views.MainActivity
+import com.example.blog.views.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -56,7 +57,7 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                 registerNameEdt.visibility = View.GONE
                 registerEmailEdt.visibility = View.GONE
                 registerPasswordEdt.visibility = View.GONE
-                materialCardView.visibility = View.GONE
+                registerUserImage.visibility = View.GONE
 
 
                 registerBtn.isEnabled = false
@@ -100,7 +101,7 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                 }
             }
 
-            materialCardView.setOnClickListener {
+            registerUserImage.setOnClickListener {
                 val intent = Intent()
                 intent.type = "image/*"
                 intent.action = Intent.ACTION_GET_CONTENT
@@ -155,19 +156,34 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                         )
                         userReference.child(userId).setValue(userData)
 
-                        val storageReference =
-                            storage.reference.child("profile_image/$userId.jpg")
-                        storageReference.putFile(imageUri!!).addOnCompleteListener { task ->
-                            storageReference.downloadUrl.addOnCompleteListener { imageUri ->
-                                val imageUrl = imageUri.result.toString()
-
-                                userReference.child(userId).child("profileImage").setValue(imageUrl)
-
+                        if (imageUri != null) {
+                            val storageReference =
+                                storage.reference.child("profile_image/$userId.jpg")
+                            storageReference.putFile(imageUri!!).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    storageReference.downloadUrl.addOnCompleteListener { imageUri ->
+                                        if (imageUri.isSuccessful) {
+                                            val imageUrl = imageUri.result.toString()
+                                            userReference.child(userId).child("profileImage")
+                                                .setValue(imageUrl)
+                                        } else {
+                                            Toast.makeText(
+                                                this,
+                                                "Failed to get profile image URL",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                                } else {
+                                    Toast.makeText(
+                                        this,
+                                        "Failed to upload profile image",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                }
                             }
                         }
-
                         Toast.makeText(this, "Register Successfully", Toast.LENGTH_SHORT).show()
-
                         startActivity(Intent(this, WelcomeActivity::class.java))
                         finish()
                     }
@@ -187,6 +203,7 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
 
             Glide.with(this)
                 .load(imageUri)
+                .placeholder(R.drawable.ic_user_avatar)
                 .apply(RequestOptions.circleCropTransform())
                 .into(binding.registerUserImage)
         }

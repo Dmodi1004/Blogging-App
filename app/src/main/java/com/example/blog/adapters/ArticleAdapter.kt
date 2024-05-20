@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.blog.R
 import com.example.blog.databinding.ArticleItemBinding
 import com.example.blog.models.BlogItemModel
 
@@ -31,6 +32,7 @@ class ArticleAdapter(
                     headingTv.text = heading
                     Glide.with(userProfileImage.context)
                         .load(profileImage)
+                        .placeholder(R.drawable.ic_user_avatar)
                         .into(userProfileImage)
                     userNameTv.text = userName
                     dateTv.text = date

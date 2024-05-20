@@ -7,13 +7,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.blog.R
-import com.example.blog.databinding.BlogItemBinding
+import com.example.blog.databinding.UserBlogItemBinding
 import com.example.blog.models.BlogItemModel
-import com.example.blog.views.activities.ArticlesActivity
 import com.example.blog.views.activities.ReadMoreActivity
-import com.example.blog.views.activities.UserBlogActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -22,14 +19,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-class BlogAdapter(private val items: MutableList<BlogItemModel>, private val context: Context) :
-    RecyclerView.Adapter<BlogAdapter.ViewHolder>() {
+class UserBlogAdapter(private val items: MutableList<BlogItemModel>, private val context: Context) :
+    RecyclerView.Adapter<UserBlogAdapter.ViewHolder>() {
 
     val databaseReference: DatabaseReference =
         FirebaseDatabase.getInstance("https://blog-748e2-default-rtdb.asia-southeast1.firebasedatabase.app").reference
     val currentUser = FirebaseAuth.getInstance().currentUser
 
-    inner class ViewHolder(private val binding: BlogItemBinding) :
+    inner class ViewHolder(private val binding: UserBlogItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(model: BlogItemModel) {
@@ -39,11 +36,6 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
             binding.apply {
                 model.apply {
                     headingTv.text = heading
-                    Glide.with(userProfileImage.context)
-                        .load(profileImage)
-                        .placeholder(R.drawable.ic_user_avatar)
-                        .into(userProfileImage)
-                    userNameTv.text = userName
                     dateTv.text = date
                     postTv.text = post
                     likeCountTv.text = likeCount.toString()
@@ -53,20 +45,6 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
                     val intent = Intent(context, ReadMoreActivity::class.java)
                     intent.putExtra("blogItem", model)
                     context.startActivity(intent)
-                }
-
-                profileLayout.setOnClickListener {
-                    val context = root.context
-
-                    if (model.userId == currentUser?.uid) {
-                        val intent = Intent(context, ArticlesActivity::class.java)
-                        context.startActivity(intent)
-                    } else {
-                        val intent = Intent(context, UserBlogActivity::class.java)
-                        intent.putExtra("blogItem", model)
-                        intent.putExtra("userId", model.userId)
-                        context.startActivity(intent)
-                    }
                 }
 
                 val postLikeReference =
@@ -90,7 +68,6 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
                 likeBtn.setOnClickListener {
                     if (currentUserLike != null) {
                         handleLikeButton(postId, model, binding)
-                        notifyDataSetChanged()
                     } else {
                         Toast.makeText(context, "You have to login first", Toast.LENGTH_SHORT)
                             .show()
@@ -138,7 +115,7 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            BlogItemBinding.inflate(LayoutInflater.from(context), parent, false)
+            UserBlogItemBinding.inflate(LayoutInflater.from(context), parent, false)
         )
     }
 
@@ -151,7 +128,11 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
 
     override fun getItemCount(): Int = items.size
 
-    private fun handleLikeButton(postId: String, model: BlogItemModel, binding: BlogItemBinding) {
+    private fun handleLikeButton(
+        postId: String,
+        model: BlogItemModel,
+        binding: UserBlogItemBinding
+    ) {
         val userReference = databaseReference.child("users").child(currentUser!!.uid)
         val postLikeReference = databaseReference.child("blogs").child(postId).child("likes")
 
@@ -210,7 +191,7 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
             })
     }
 
-    private fun updateLikeButton(binding: BlogItemBinding, liked: Boolean) {
+    private fun updateLikeButton(binding: UserBlogItemBinding, liked: Boolean) {
         if (liked) {
             binding.likeBtn.setImageResource(R.drawable.ic_heart_black)
         } else {
@@ -218,7 +199,11 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
         }
     }
 
-    private fun handleSaveButton(postId: String, model: BlogItemModel, binding: BlogItemBinding) {
+    private fun handleSaveButton(
+        postId: String,
+        model: BlogItemModel,
+        binding: UserBlogItemBinding
+    ) {
         val userReference = databaseReference.child("users").child(currentUser!!.uid)
         userReference.child("savePost").child(postId)
             .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -293,9 +278,4 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
         context.startActivity(Intent.createChooser(shareIntent, "Share post via"))
     }
 
-    fun updateData(savedBlogArticles: List<BlogItemModel>) {
-        items.clear()
-        items.addAll(savedBlogArticles)
-        notifyDataSetChanged()
-    }
 }

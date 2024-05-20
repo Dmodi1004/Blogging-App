@@ -1,6 +1,7 @@
-package com.example.blog.views
+package com.example.blog.views.activities
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.blog.databinding.ActivityAddArticleBinding
@@ -40,6 +41,8 @@ class AddArticleActivity : AppCompatActivity() {
 
             addBlogBtn.setOnClickListener {
 
+                loading.visibility = View.VISIBLE
+
                 val title = blogTitleEdt.editText?.text.toString().trim()
                 val description = blogDescriptionEdt.editText?.text.toString().trim()
 
@@ -49,14 +52,15 @@ class AddArticleActivity : AppCompatActivity() {
                         "Please fill all the fields",
                         Toast.LENGTH_SHORT
                     ).show()
+                    loading.visibility = View.GONE
                 }
 
                 val user: FirebaseUser? = auth.currentUser
 
                 if (user != null) {
                     val userId = user.uid
-                    val userName = user.displayName ?: "Anonymous"
-                    val userImageUrl = user.photoUrl ?: ""
+                    user.displayName ?: "Anonymous"
+                    user.photoUrl ?: ""
 
                     userReference.child(userId)
                         .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -96,6 +100,7 @@ class AddArticleActivity : AppCompatActivity() {
                                         }
                                     }
                                 }
+                                loading.visibility = View.GONE
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -104,8 +109,8 @@ class AddArticleActivity : AppCompatActivity() {
                                     error.message,
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                loading.visibility = View.GONE
                             }
-
                         })
                 }
 

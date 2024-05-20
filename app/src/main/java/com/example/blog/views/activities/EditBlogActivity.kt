@@ -1,4 +1,4 @@
-package com.example.blog.views
+package com.example.blog.views.activities
 
 import android.os.Bundle
 import android.widget.Toast

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/darkGray"
-    tools:context=".views.ProfileActivity">
+    tools:context=".views.activities.ProfileActivity">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/materialCardView"
@@ -14,7 +14,8 @@
         android:layout_height="200dp"
         android:layout_marginTop="50dp"
         android:backgroundTint="@color/white"
-        app:cardCornerRadius="400dp"
+        app:cardCornerRadius="100dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -35,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/montserrat_semi_bold"
-        android:text="TextView"
+        android:text="Dhruv"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -43,16 +44,30 @@
         app:layout_constraintStart_toStartOf="@id/materialCardView"
         app:layout_constraintTop_toBottomOf="@id/materialCardView" />
 
+    <TextView
+        android:id="@+id/userEmailTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/montserrat_light"
+        android:text="dhruv@gmail.com"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/materialCardView"
+        app:layout_constraintStart_toStartOf="@id/materialCardView"
+        app:layout_constraintTop_toBottomOf="@id/userNameTv" />
+
     <View
         android:id="@+id/divider3"
         android:layout_width="0dp"
-        android:layout_height="1.5dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/lightGray"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/gray"
         android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="@id/materialCardView"
         app:layout_constraintStart_toStartOf="@+id/materialCardView"
-        app:layout_constraintTop_toBottomOf="@+id/userNameTv" />
+        app:layout_constraintTop_toBottomOf="@+id/userEmailTv" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addNewBlogBtn"
@@ -114,6 +129,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/editBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

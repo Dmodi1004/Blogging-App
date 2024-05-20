@@ -27,11 +27,60 @@
             android:text="Please Start Writing Better Git Commit"
             android:textColor="@color/skyBlue"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/materialCardView2"
+            app:layout_constraintEnd_toStartOf="@+id/profileLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/profileLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="9dp"
+            app:layout_constraintBottom_toBottomOf="@+id/headingTv"
+            app:layout_constraintTop_toTopOf="@+id/headingTv"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView2"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="17dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/userNameTv"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeWidth="0.5dp">
+
+                <ImageView
+                    android:id="@+id/userProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/profile"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_user_avatar" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/userNameTv"
+                android:layout_width="70dp"
+                android:layout_height="44dp"
+                android:layout_marginEnd="9dp"
+                android:fontFamily="@font/montserrat_light"
+                android:gravity="center"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:text="New Blogger"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@+id/materialCardView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/materialCardView2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--<com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView2"
             android:layout_width="34dp"
             android:layout_height="34dp"
@@ -66,7 +115,7 @@
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/materialCardView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/materialCardView2" />
+            app:layout_constraintTop_toTopOf="@+id/materialCardView2" />-->
 
         <TextView
             android:id="@+id/dateTv"
@@ -75,16 +124,16 @@
             android:fontFamily="@font/montserrat_light"
             android:text="May 11, 2024"
             android:textColor="@color/lightGray"
-            app:layout_constraintEnd_toEndOf="@+id/userNameTv"
-            app:layout_constraintTop_toBottomOf="@+id/userNameTv" />
+            app:layout_constraintEnd_toEndOf="@+id/profileLayout"
+            app:layout_constraintTop_toBottomOf="@+id/profileLayout" />
 
         <View
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintEnd_toEndOf="@+id/userNameTv"
+            android:background="@color/gray"
+            app:layout_constraintEnd_toEndOf="@+id/profileLayout"
             app:layout_constraintStart_toStartOf="@+id/headingTv"
             app:layout_constraintTop_toBottomOf="@+id/dateTv" />
 
@@ -121,7 +170,7 @@
             android:id="@+id/likeCountTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="4dp"
             android:fontFamily="@font/montserrat_semi_bold"
             android:text="20"
             android:textColor="@color/black"
@@ -134,7 +183,7 @@
             android:id="@+id/likeBtn"
             android:layout_width="24dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/like"
             android:focusable="true"
@@ -147,7 +196,7 @@
             android:id="@+id/postSaveBtn"
             android:layout_width="24dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/save"
             android:focusable="true"
@@ -160,7 +209,7 @@
             android:id="@+id/postShareBtn"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="16dp"
             android:focusable="true"
             android:contentDescription="@string/share"
             android:background="@android:color/transparent"

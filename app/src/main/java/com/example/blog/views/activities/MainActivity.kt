@@ -1,14 +1,16 @@
-package com.example.blog.views
+package com.example.blog.views.activities
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.blog.R
 import com.example.blog.adapters.BlogAdapter
 import com.example.blog.databinding.ActivityMainBinding
 import com.example.blog.models.BlogItemModel
@@ -51,30 +53,7 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
 
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                blogItems.clear()
-                allBlogItems.clear()
-                for (snapshot in snapshot.children) {
-                    val blogItem = snapshot.getValue(BlogItemModel::class.java)
-                    if (blogItem != null) {
-                        blogItems.add(blogItem)
-                        allBlogItems.add(blogItem)
-                    }
-                }
-                blogItems.reverse()
-                allBlogItems.reverse()
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Something went wrong ${error.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
+        fetchBlogs()
 
         binding.addArticleBtn.setOnClickListener {
             startActivity(Intent(this@MainActivity, AddArticleActivity::class.java))
@@ -110,6 +89,36 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun fetchBlogs() {
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                blogItems.clear()
+                allBlogItems.clear()
+                for (snapshot in snapshot.children) {
+                    val blogItem = snapshot.getValue(BlogItemModel::class.java)
+                    if (blogItem != null) {
+                        blogItems.add(blogItem)
+                        allBlogItems.add(blogItem)
+                    }
+                }
+                blogItems.reverse()
+                allBlogItems.reverse()
+                adapter.notifyDataSetChanged()
+                binding.loading.visibility = View.GONE
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Something went wrong ${error.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                binding.loading.visibility = View.GONE
+            }
+        })
+    }
+
+
     private fun filter(query: String?) {
         if (query.isNullOrEmpty()) {
             blogItems.clear()
@@ -139,12 +148,15 @@ class MainActivity : AppCompatActivity() {
                 if (profileImageUrl != null) {
                     Glide.with(this@MainActivity)
                         .load(profileImageUrl)
+                        .placeholder(R.drawable.ic_user_avatar)
                         .into(binding.profileImage)
 
                     Log.e("TAG", "onDataChange: $profileImageUrl")
                 } else {
                     Log.e("TAG", "Something went wrong")
                 }
+                binding.loading.visibility = View.GONE
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -153,6 +165,8 @@ class MainActivity : AppCompatActivity() {
                     "Error loading profile image ${error.message}",
                     Toast.LENGTH_SHORT
                 ).show()
+                binding.loading.visibility = View.GONE
+
             }
 
         })

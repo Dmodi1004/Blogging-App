@@ -1,4 +1,4 @@
-package com.example.blog.views
+package com.example.blog.views.activities
 
 import android.os.Bundle
 import android.view.View
@@ -59,6 +59,7 @@ class SavedArticlesActivity : AppCompatActivity() {
                             binding.nothingTv.visibility = View.VISIBLE
                         }
                     }
+                    binding.loading.visibility = View.GONE
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -67,6 +68,7 @@ class SavedArticlesActivity : AppCompatActivity() {
                         "Something went wrong ${error.message}",
                         Toast.LENGTH_SHORT
                     ).show()
+                    binding.loading.visibility = View.GONE
                 }
             })
         }
