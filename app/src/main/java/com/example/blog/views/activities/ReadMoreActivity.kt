@@ -1,9 +1,10 @@
-package com.example.blog.views
+package com.example.blog.views.activities
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.blog.R
 import com.example.blog.databinding.ActivityReadMoreBinding
 import com.example.blog.models.BlogItemModel
 
@@ -31,6 +32,7 @@ class ReadMoreActivity : AppCompatActivity() {
 
                     Glide.with(this@ReadMoreActivity)
                         .load(profileImage)
+                        .placeholder(R.drawable.ic_user_avatar)
                         .into(userProfileImage)
 
                 }

@@ -11,7 +11,9 @@ import com.bumptech.glide.Glide
 import com.example.blog.R
 import com.example.blog.databinding.BlogItemBinding
 import com.example.blog.models.BlogItemModel
-import com.example.blog.views.ReadMoreActivity
+import com.example.blog.views.activities.ArticlesActivity
+import com.example.blog.views.activities.ReadMoreActivity
+import com.example.blog.views.activities.UserBlogActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -39,6 +41,7 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
                     headingTv.text = heading
                     Glide.with(userProfileImage.context)
                         .load(profileImage)
+                        .placeholder(R.drawable.ic_user_avatar)
                         .into(userProfileImage)
                     userNameTv.text = userName
                     dateTv.text = date
@@ -50,6 +53,20 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
                     val intent = Intent(context, ReadMoreActivity::class.java)
                     intent.putExtra("blogItem", model)
                     context.startActivity(intent)
+                }
+
+                profileLayout.setOnClickListener {
+                    val context = root.context
+
+                    if (model.userId == currentUser?.uid) {
+                        val intent = Intent(context, ArticlesActivity::class.java)
+                        context.startActivity(intent)
+                    } else {
+                        val intent = Intent(context, UserBlogActivity::class.java)
+                        intent.putExtra("blogItem", model)
+                        intent.putExtra("userId", model.userId)
+                        context.startActivity(intent)
+                    }
                 }
 
                 val postLikeReference =
@@ -73,6 +90,7 @@ class BlogAdapter(private val items: MutableList<BlogItemModel>, private val con
                 likeBtn.setOnClickListener {
                     if (currentUserLike != null) {
                         handleLikeButton(postId, model, binding)
+                        notifyDataSetChanged()
                     } else {
                         Toast.makeText(context, "You have to login first", Toast.LENGTH_SHORT)
                             .show()

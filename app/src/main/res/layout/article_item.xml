@@ -37,7 +37,7 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:backgroundTint="@color/white"
-            app:cardCornerRadius="100dp"
+            app:cardCornerRadius="17dp"
             app:layout_constraintBottom_toBottomOf="@+id/headingTv"
             app:layout_constraintEnd_toStartOf="@+id/userNameTv"
             app:layout_constraintTop_toTopOf="@+id/headingTv"
@@ -45,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/userProfileImage"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/profile"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_user_avatar" />

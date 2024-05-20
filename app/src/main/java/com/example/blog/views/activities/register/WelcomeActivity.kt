@@ -1,11 +1,11 @@
-package com.example.blog.views.register
+package com.example.blog.views.activities.register
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.blog.databinding.ActivityWelcomeBinding
-import com.example.blog.views.MainActivity
+import com.example.blog.views.activities.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class WelcomeActivity : AppCompatActivity() {

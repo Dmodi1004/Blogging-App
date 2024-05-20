@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Blog" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <item name="android:statusBarColor">@color/skyBlue</item>
+        <item name="android:statusBarColor">@color/darkGray</item>
     </style>
 
     <style name="MySplashScreen" parent="Theme.SplashScreen">

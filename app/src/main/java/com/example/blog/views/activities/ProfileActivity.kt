@@ -1,19 +1,17 @@
-package com.example.blog.views
+package com.example.blog.views.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.blog.R
 import com.example.blog.databinding.ActivityProfileBinding
-import com.example.blog.views.register.WelcomeActivity
+import com.example.blog.views.activities.register.WelcomeActivity
+import com.example.blog.views.fragments.EditProfileFragmentDialogue
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -31,10 +29,11 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
+    private var profileImageUrl: String? = null
+    private var userName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
@@ -90,6 +89,18 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, ArticlesActivity::class.java))
         }
 
+        binding.editBtn.setOnClickListener {
+
+            val bundle = Bundle().apply {
+                putString("profileImageUrl", profileImageUrl)
+                putString("userName", userName)
+            }
+            val editProfileFragment = EditProfileFragmentDialogue().apply {
+                arguments = bundle
+            }
+            editProfileFragment.show(supportFragmentManager, "editProfileFragment")
+        }
+
     }
 
     private fun loadUserProfileData(userId: String) {
@@ -97,10 +108,11 @@ class ProfileActivity : AppCompatActivity() {
 
         userReference.child("profileImage").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val profileImageUrl = snapshot.getValue(String::class.java)
+                profileImageUrl = snapshot.getValue(String::class.java)
                 if (profileImageUrl != null) {
                     Glide.with(this@ProfileActivity)
                         .load(profileImageUrl)
+                        .placeholder(R.drawable.ic_user_avatar)
                         .into(binding.profileImage)
                 }
             }
@@ -116,9 +128,26 @@ class ProfileActivity : AppCompatActivity() {
 
         userReference.child("name").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val userName = snapshot.getValue(String::class.java)
+                userName = snapshot.getValue(String::class.java)
                 if (userName != null) {
                     binding.userNameTv.text = userName
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(
+                    this@ProfileActivity,
+                    "Failed to load user profile image 😢",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
+
+        userReference.child("email").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userEmail = snapshot.getValue(String::class.java)
+                if (userEmail != null) {
+                    binding.userEmailTv.text = userEmail
                 }
             }
 
